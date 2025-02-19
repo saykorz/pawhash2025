@@ -1,23 +1,26 @@
 {
-  "name": "PawHash",
-  "version": "0.6",
-  "manifest_version": 2,
+  "name": "PawHash2025",
+  "version": "0.6.1",
+  "manifest_version": 3,
   "description": "Securely generate website-specific passwords from a single master password. Compatible with Password Hasher for Firefox.",
   "icons": {
-     "16": "paw16.png",
-     "48": "paw48.png",
+    "16": "paw16.png",
+    "48": "paw48.png",
     "128": "paw128.png"
   },
-  "minimum_chrome_version": "20",
-  "content_security_policy": "default-src 'self'",
-  "browser_action": {
+  "minimum_chrome_version": "88",
+  "action": {
     "default_icon": "paw19.png",
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
   "permissions": [
-    "storage",
-    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
     "<all_urls>"
-  ]
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  }
 }
