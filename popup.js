@@ -68,17 +68,24 @@
       });
     };
 
+    // replace the value of all password inputs with the generated hash
+    var setPasswordInputs = function (quoted) {
+      var inputs = document.getElementsByTagName('input');
+      for (var i = 0; i < inputs.length; ++i)
+        if (inputs[i].getAttribute('type') == 'password')
+          inputs[i].value = quoted;
+    }
+
     // Given a chrome tab object, inject a content script which sets the value
     // of every password field in that tab to the currently calculated hash
     // output. Save the master password if it's supposed to be stored, save
     // tag-specific options, and then close the popup.
     var fillHash = function (tab) {
       var quoted = hash_field.value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-      chrome.tabs.executeScript(tab.id, { code:
-        "var inputs = document.getElementsByTagName('input');" +
-        "for (var i = 0; i < inputs.length; ++i)" +
-        "  if (inputs[i].getAttribute('type') == 'password')" +
-        "     inputs[i].value = '" + quoted + "';"
+      chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        func: setPasswordInputs,
+        args: [quoted],
       });
 
       if (options.storepass == 'forever') {
