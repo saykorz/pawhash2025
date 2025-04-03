@@ -15,6 +15,7 @@
   },
   "options_page": "options.html",
   "permissions": [
+    "scripting",
     "storage"
   ],
   "host_permissions": [
